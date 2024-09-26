@@ -1,0 +1,418 @@
+1)FizzBuzz
+
+for number in 1...100 {
+    if number % 3 == 0 && number % 5 == 0 {
+        print("FizzBuzz")
+    } else if number % 3 == 0 {
+        print("Fizz")
+    } else if number % 5 == 0 {
+        print("Buzz")
+    } else {
+        print(number)
+    }
+}
+
+2)Prime numbers
+
+func isPrime(_ number: Int) -> Bool {
+    if number < 2 {
+        return false
+    }
+    for i in 2..<number {
+        if number % i == 0 {
+            return false
+        }
+    }
+    return true
+}
+
+// Main program to print prime numbers between 1 and 100
+for number in 1...100 {
+    if isPrime(number) {
+        print(number)
+    }
+}
+
+3)F,K,C
+
+import Foundation
+
+func celsiusToFahrenheit(_ celsius: Double) -> Double {
+    return celsius * 9/5 + 32
+}
+
+func celsiusToKelvin(_ celsius: Double) -> Double {
+    return celsius + 273.15
+}
+
+func fahrenheitToCelsius(_ fahrenheit: Double) -> Double {
+    return (fahrenheit - 32) * 5/9
+}
+
+func fahrenheitToKelvin(_ fahrenheit: Double) -> Double {
+    return celsiusToKelvin(fahrenheitToCelsius(fahrenheit))
+}
+
+func kelvinToCelsius(_ kelvin: Double) -> Double {
+    return kelvin - 273.15
+}
+
+func kelvinToFahrenheit(_ kelvin: Double) -> Double {
+    return celsiusToFahrenheit(kelvinToCelsius(kelvin))
+}
+
+print("Enter a temperature value:")
+if let inputValue = readLine(), let temperature = Double(inputValue) {
+    print("Specify the unit (C, F, K):")
+    if let unit = readLine() {
+        switch unit.uppercased() {
+        case "C":
+            let fahrenheit = celsiusToFahrenheit(temperature)
+            let kelvin = celsiusToKelvin(temperature)
+            print("\(temperature)°C is \(fahrenheit)°F and \(kelvin)K")
+        case "F":
+            let celsius = fahrenheitToCelsius(temperature)
+            let kelvin = fahrenheitToKelvin(temperature)
+            print("\(temperature)°F is \(celsius)°C and \(kelvin)K")
+        case "K":
+            let celsius = kelvinToCelsius(temperature)
+            let fahrenheit = kelvinToFahrenheit(temperature)
+            print("\(temperature)K is \(celsius)°C and \(fahrenheit)°F")
+        default:
+            print("Invalid unit. Please enter C, F, or K.")
+        }
+    }
+} else {
+    print("Invalid temperature value.")
+}
+
+4)
+
+import Foundation
+
+// Array to store shopping list items
+var shoppingList = [String]()
+
+// Function to display the menu
+func displayMenu() {
+    print("""
+    Shopping List Manager
+    ---------------------
+    1. Add an item
+    2. Remove an item
+    3. View the list
+    4. Exit
+    """)
+}
+
+// Function to add an item to the shopping list
+func addItem() {
+    print("Enter the item to add:")
+    if let item = readLine() {
+        shoppingList.append(item)
+        print("\(item) has been added to the list.")
+    }
+}
+
+// Function to remove an item from the shopping list
+func removeItem() {
+    print("Enter the item to remove:")
+    if let item = readLine() {
+        if let index = shoppingList.firstIndex(of: item) {
+            shoppingList.remove(at: index)
+            print("\(item) has been removed from the list.")
+        } else {
+            print("Item not found in the list.")
+        }
+    }
+}
+
+// Function to view the shopping list
+func viewList() {
+    if shoppingList.isEmpty {
+        print("Your shopping list is empty.")
+    } else {
+        print("Your shopping list:")
+        for (index, item) in shoppingList.enumerated() {
+            print("\(index + 1). \(item)")
+        }
+    }
+}
+
+// Main loop
+var shouldExit = false
+
+while !shouldExit {
+    displayMenu()
+    print("Choose an option (1-4):")
+    
+    if let choice = readLine(), let option = Int(choice) {
+        switch option {
+        case 1:
+            addItem()
+        case 2:
+            removeItem()
+        case 3:
+            viewList()
+        case 4:
+            shouldExit = true
+            print("Exiting the application.")
+        default:
+            print("Invalid option. Please choose between 1 and 4.")
+        }
+    } else {
+        print("Invalid input. Please enter a number.")
+    }
+}
+
+5)Word frequency counter
+
+import Foundation
+
+// Function to count word frequencies in a sentence
+func countWordFrequency(sentence: String) -> [String: Int] {
+    var wordFrequency = [String: Int]()
+    
+    // Convert the sentence to lowercase and remove punctuation
+    let cleanedSentence = sentence.lowercased().components(separatedBy: CharacterSet.punctuationCharacters).joined()
+    
+    // Split the cleaned sentence into words
+    let words = cleanedSentence.split(separator: " ")
+    
+    // Count the frequency of each word
+    for word in words {
+        let wordStr = String(word)
+        wordFrequency[wordStr, default: 0] += 1
+    }
+    
+    return wordFrequency
+}
+
+// Function to display the word frequencies
+func displayWordFrequency(_ frequencies: [String: Int]) {
+    print("Word frequencies:")
+    for (word, count) in frequencies {
+        print("\(word): \(count)")
+    }
+}
+
+// Main program
+print("Enter a sentence:")
+if let sentence = readLine() {
+    let wordFrequencies = countWordFrequency(sentence: sentence)
+    displayWordFrequency(wordFrequencies)
+} else {
+    print("Invalid input.")
+}
+
+6)Fibonacci sequence 
+
+func fibonacci(_ n: Int) -> [Int] {
+    // Return an empty array if n is less than or equal to 0
+    if n <= 0 {
+        return []
+    }
+    
+    // Initialize the first two Fibonacci numbers
+    var sequence = [0, 1]
+    
+    // If n is 1, return only the first Fibonacci number
+    if n == 1 {
+        return [0]
+    }
+    
+    // Generate the Fibonacci sequence up to n numbers
+    for i in 2..<n {
+        let nextNumber = sequence[i - 1] + sequence[i - 2]
+        sequence.append(nextNumber)
+    }
+    
+    return sequence
+}
+
+// Example usage:
+let n = 10
+let fibSequence = fibonacci(n)
+print("The first \(n) Fibonacci numbers are: \(fibSequence)")
+
+7)Grade calculator 
+
+import Foundation
+
+// Function to calculate the average score
+func calculateAverage(scores: [Int]) -> Double {
+    let total = scores.reduce(0, +)
+    return Double(total) / Double(scores.count)
+}
+
+// Function to find the highest score
+func findHighestScore(scores: [Int]) -> Int {
+    return scores.max() ?? 0
+}
+
+// Function to find the lowest score
+func findLowestScore(scores: [Int]) -> Int {
+    return scores.min() ?? 0
+}
+
+// Function to display student scores with comparison to the average
+func displayStudentScores(students: [String: Int], average: Double) {
+    for (student, score) in students {
+        let comparison = score >= Int(average) ? "above" : "below"
+        print("\(student): \(score) (\(comparison) average)")
+    }
+}
+
+// Main program
+var students = [String: Int]()
+var input = ""
+
+// Accept student names and scores
+repeat {
+    print("Enter the student's name (or type 'done' to finish):")
+    if let name = readLine(), name.lowercased() != "done" {
+        print("Enter the score for \(name):")
+        if let scoreInput = readLine(), let score = Int(scoreInput) {
+            students[name] = score
+        } else {
+            print("Invalid score. Please enter a valid number.")
+        }
+    } else {
+        break
+    }
+} while true
+
+// Process and display results if there are students
+if !students.isEmpty {
+    let scores = Array(students.values)
+    let averageScore = calculateAverage(scores: scores)
+    let highestScore = findHighestScore(scores: scores)
+    let lowestScore = findLowestScore(scores: scores)
+    
+    print("\nResults:")
+    print("Average score: \(averageScore)")
+    print("Highest score: \(highestScore)")
+    print("Lowest score: \(lowestScore)\n")
+    
+    // Display each student's score and comparison to the average
+    displayStudentScores(students: students, average: averageScore)
+} else {
+    print("No students were entered.")
+}
+
+8)Palindrome checker 
+
+func isPalindrome(_ str: String) -> Bool {
+    // Remove spaces and make the string lowercase
+    let cleanedString = str.lowercased().replacingOccurrences(of: " ", with: "")
+    
+    // Compare the cleaned string with its reverse
+    return cleanedString == String(cleanedString.reversed())
+}
+
+// Example usage:
+let input = "A man a plan a canal Panama"
+let result = isPalindrome(input)
+print("Is the string a palindrome? \(result)")
+
+9)Simple calculator 
+
+import Foundation
+
+// Functions to perform the basic operations
+func add(_ a: Double, _ b: Double) -> Double {
+    return a + b
+}
+
+func subtract(_ a: Double, _ b: Double) -> Double {
+    return a - b
+}
+
+func multiply(_ a: Double, _ b: Double) -> Double {
+    return a * b
+}
+
+func divide(_ a: Double, _ b: Double) -> Double? {
+    if b == 0 {
+        return nil
+    }
+    return a / b
+}
+
+// Main program loop for the calculator
+var continueCalculating = true
+
+while continueCalculating {
+    print("Enter the first number:")
+    guard let input1 = readLine(), let num1 = Double(input1) else {
+        print("Invalid number. Please enter a valid number.")
+        continue
+    }
+
+    print("Enter the second number:")
+    guard let input2 = readLine(), let num2 = Double(input2) else {
+        print("Invalid number. Please enter a valid number.")
+        continue
+    }
+
+    print("Choose an operation (+, -, *, /):")
+    if let operation = readLine() {
+        var result: Double?
+
+        switch operation {
+        case "+":
+            result = add(num1, num2)
+        case "-":
+            result = subtract(num1, num2)
+        case "*":
+            result = multiply(num1, num2)
+        case "/":
+            result = divide(num1, num2)
+            if result == nil {
+                print("Error: Division by zero is not allowed.")
+                continue
+            }
+        default:
+            print("Invalid operation. Please enter +, -, *, or /.")
+            continue
+        }
+
+        if let res = result {
+            print("Result: \(res)")
+        }
+    }
+
+    print("Do you want to perform another calculation? (yes/no):")
+    if let response = readLine(), response.lowercased() == "no" {
+        continueCalculating
+
+10)
+Unique characters 
+
+import Foundation
+
+// Function to check if all characters in the string are unique
+func hasUniqueCharacters(_ text: String) -> Bool {
+    // Create a Set to store characters we have encountered
+    var charSet = Set<Character>()
+    
+    // Iterate through each character in the string
+    for char in text {
+        // If the character is already in the Set, it's a duplicate
+        if charSet.contains(char) {
+            return false
+        }
+        // Otherwise, add the character to the Set
+        charSet.insert(char)
+    }
+    
+    // If no duplicates were found, return true
+    return true
+}
+
+// Example usage:
+let testString1 = "Hello"
+let testString2 = "World"
+
+print("Does '\(testString1)' have unique characters? \(hasUniqueCharacters(testString1))") // false
+print("Does '\(testString2)' have unique characters? \(hasUniqueCharacters(testString2))") // true
